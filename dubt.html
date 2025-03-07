@@ -11,7 +11,8 @@
         body { font-family: Arial, sans-serif; }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 8px; text-align: left; border: 1px solid #ddd;
-               white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
         th { background-color: #f2f2f2; }
         button { padding: 10px; margin: 5px; border: none; cursor: pointer; }
     </style>
@@ -127,7 +128,7 @@
 87,15/09/2024,5200000,မဆပ်ရသေး,-,-,-
 88,14/10/2024,500000,မဆပ်ရသေး,-,-,-
 89,15/11/2024,8000000,မဆပ်ရသေး,-,-,-
-90,17/12/2024,2550000,မဆပ်ရသေး,-,-,-
+90,17/12/2024,2055000,မဆပ်ရသေး,-,-,-
 91,13/01/2025,700000,20/02/2025,1,21000,721000
 92,20/01/2025,200000,မဆပ်ရသေး,-,-,-
 93,23/01/2025,200000,မဆပ်ရသေး,-,-,-`;
@@ -149,8 +150,11 @@
             };
             //set random color for each group not too dark
             var colors = {};
+            var dark_colors = {};
             uniqueGroups.forEach(group => {
-                colors[group] = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                var random_num = Math.random() * 360;
+                colors[group] = `hsl(${random_num}, 80%, 90%)`;
+                dark_colors[group] = `hsl(${random_num}, 100%, 30%)`;
             });
             //set background color of buttons to match group color
             $("button").each(function() {
@@ -164,10 +168,12 @@
                 var tr = "<tr>" + cols.map(col => `<td>${col}</td>`).join("") + "</tr>";
                 $("#csvTable tbody").append(tr);
             });
-            //set background color of groups
+            //set background color and text color of groups
             $("#csvTable tbody tr").each(function() {
-                var group = $(this).find("td").eq(3).text();
-                $(this).css("background-color", colors[group]);
+                var target = $(this).find("td").eq(3);
+                var group = target.text();
+                target.css("background-color", colors[group]);
+                target.css("color", dark_colors[group]);
             });
             //set default show entries to 100
             $('#csvTable').DataTable({
